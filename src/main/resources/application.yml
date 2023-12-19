@@ -1,6 +1,10 @@
 server:
   port: 8090
 spring:
+  application:
+    name: "loans"
+  profiles:
+    active: "prod"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,16 +18,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-#server:
-# port: 8090
-#
-#spring:
-# jpa:
-#  show-sql: true
-#  hibernate:
-#   ddl-auto: update
-# datasource:
-#  url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/loans
-#  username: root
-#  password: root
-#  driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
